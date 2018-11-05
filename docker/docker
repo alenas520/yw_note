@@ -29,3 +29,11 @@ $ sudo systemctl enable docker
 9、验证安装是否成功(有client和service两部分表示docker安装启动都成功了)
 $ docker version
 
+二、docker使用
+
+docker镜像加速
+vim /etc/docker/daemon.json
+{
+  "registry-mirrors": ["http://hub-mirror.c.163.com"]
+}
+
