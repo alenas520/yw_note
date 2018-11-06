@@ -1,0 +1,28 @@
+安装elasticsearch报错处理
+错误1：error='Cannot allocate memory' (errno=12)
+	由于elasticsearch5.0默认分配jvm空间大小为2g，需要改小一点
+	vim config/jvm.options  
+	-Xms2g  →  -Xms512m
+	-Xmx2g  →  -Xmx512m
+错误2： can not run elasticsearch as root
+	linux下不允许root用户来运行es，创建一个普通用户
+错误3：max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
+	vim /etc/security/limits.conf
+	* soft nofile 300000
+	* hard nofile 300000
+	* soft nproc 102400
+	* soft memlock unlimited
+	* hard memlock unlimited
+错误4：max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+	echo "vm.max_map_count=262144" > /etc/sysctl.conf
+	sysctl -p
+错误5：外网无法访问es集群
+	修改config/elasticsearch.yml中的network.host为network.host: 0.0.0.0以便让外网任何IP都能来访问时
+
+elasticsearch可视化工具
+1.elasticsearch-head
+	https://github.com/mobz/elasticsearch-head
+2.ElasticHD
+	https://github.com/360EntSecGroup-Skylar/ElasticHD
+3.Dejavu
+	https://github.com/appbaseio/dejavu/
